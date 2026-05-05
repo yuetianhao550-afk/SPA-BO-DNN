@@ -1,0 +1,6 @@
+{
+  "name": "SPA-BO/DNN 控制台",
+  "description": "基于 React 与 TensorFlow.js 构建的自动寻优与系统闭环控制数字孪生沙盒页面。",
+  "requestFramePermissions": [],
+  "majorCapabilities": []
+}

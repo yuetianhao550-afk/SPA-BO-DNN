@@ -1,0 +1,23 @@
+{
+  "entities": {
+    "ExperimentResult": {
+      "title": "ExperimentResult",
+      "description": "Store experiment parameters and results for optimization",
+      "type": "object",
+      "properties": {
+        "energyDensity": { "type": "number" },
+        "algaeDensity": { "type": "number" },
+        "capacitorLevel": { "type": "number" },
+        "resultScore": { "type": "number" },
+        "timestamp": { "type": "string", "format": "date-time" }
+      },
+      "required": ["energyDensity", "algaeDensity", "capacitorLevel", "resultScore", "timestamp"]
+    }
+  },
+  "firestore": {
+    "/experiments/{experimentId}": {
+      "schema": "ExperimentResult",
+      "description": "Historical experiment data"
+    }
+  }
+}

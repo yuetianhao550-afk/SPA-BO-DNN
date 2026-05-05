@@ -1,0 +1,25 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // 基础守门：彻底禁止一切未明确授权的操作
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // 辅助函数
+    function isSignedIn() { return request.auth != null; }
+    function isValidExperiment(data) {
+      return data.energyDensity is number && data.algaeDensity is number && 
+             data.capacitorLevel is number && data.resultScore is number;
+    }
+
+    // 实验数据访问控制
+    match /experiments/{experimentId} {
+      // 允许所有已认证用户添加实验数据 (基于现有需求先放宽，之后在生产环境应严格根据 role)
+      allow create: if isSignedIn() && isValidExperiment(request.resource.data);
+      // 允许查询读取历史数据
+      allow list: if isSignedIn();
+      allow get: if isSignedIn();
+    }
+  }
+}
